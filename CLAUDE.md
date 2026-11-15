@@ -3,8 +3,9 @@
 A toolkit other developers drop into Python and Node/TypeScript repositories:
 hard limits as checked manifests, AI rules as principles only. Everything outside
 `CLAUDE.md` and `.claude/` is shared publicly and stays generic: no personal
-names, absolute paths or references to other projects (use placeholders such as
-`<owner>`).
+names, absolute paths or references to other projects. The kit's own public
+repo, `Lupinixio/agent-terminus`, may be named in URLs and the licence; anything
+standing for the consumer's side uses placeholders (`@your-org/...`).
 
 Stack: Node `^22.18.0 || >=24.11.0` (plain ES modules with JSDoc types, checked by
 `tsc` 6; ESLint; `node:test`), Python `>=3.11` (stdlib only at runtime; uv,

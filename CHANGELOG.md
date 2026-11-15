@@ -6,20 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
-### Changed
+## [0.1.0] - 2026-11-15
 
-- Renamed the project from `boundaries-kit` to **Agent Terminus**: npm package
-  and PyPI distribution `agent-terminus`, Python import package `agent_terminus`
-  (`python -m agent_terminus`, pytest plugin `agent_terminus`, import-linter
-  contract type `agent_terminus.importlinter_contract.BoundaryContract`), schema
-  `$id`s `urn:agent-terminus:...`, CODEOWNERS markers `# BEGIN agent-terminus` /
-  `# END agent-terminus`, AGENTS.md markers `<!-- agent-terminus:rules:* -->`
-  and the version header in `.boundaries/rules.md`. The `.boundaries/` folder,
-  manifest file names and the `boundaries` command are unchanged
-  (`docs/decisions/0003-rename-to-agent-terminus.md`).
-- Licensed under MIT (previously no licence, all rights reserved).
-
-## [0.1.0]
+First public release, as **Agent Terminus** under the MIT licence (developed
+under the working name `boundaries-kit`; see
+`docs/decisions/0003-rename-to-agent-terminus.md`).
 
 ### Added
 
