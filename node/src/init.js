@@ -285,16 +285,17 @@ export async function init(options) {
 
   say('');
   say('Next steps');
-  if (!options.withCi) {
-    say('1. Add this block to CODEOWNERS (or rerun with --with-ci):');
-    say(indent(block));
-  } else {
+  if (options.withCi) {
     say('1. Review .github/CODEOWNERS and .github/workflows/boundaries.yml.');
+    say('2. On GitHub, Settings > Rules > Rulesets (or Branches > branch protection) for the default branch:');
+    say('   require a pull request, require review from Code Owners, dismiss stale approvals,');
+    say('   require the status checks "boundaries / python" and/or "boundaries / node" with up-to-date branches,');
+    say('   block force pushes, and leave the bypass list empty. Details: docs/protecting-checks.md.');
+    say('3. Write a manifest per component (see .boundaries/component.toml.example), then run boundaries generate and boundaries check.');
+  } else {
+    say('1. Write a manifest per component (see .boundaries/component.toml.example), then run boundaries generate and boundaries check.');
+    say('2. No server-side check was set up, so every local check can be skipped. To add the required CI job,');
+    say('   CODEOWNERS and branch protection, rerun with --with-ci (details: docs/protecting-checks.md).');
   }
-  say('2. On GitHub, Settings > Rules > Rulesets (or Branches > branch protection) for the default branch:');
-  say('   require a pull request, require review from Code Owners, dismiss stale approvals,');
-  say('   require the status checks "boundaries / python" and/or "boundaries / node" with up-to-date branches,');
-  say('   block force pushes, and leave the bypass list empty. Details: docs/protecting-checks.md.');
-  say('3. Write a manifest per component (see .boundaries/component.toml.example), then run boundaries generate and boundaries check.');
   return { code: 0, lines };
 }

@@ -17,8 +17,6 @@ test('init creates the basics, is idempotent, and check passes afterwards', (t) 
     assert.ok(existsSync(path.join(dir, rel)), rel);
   }
   assert.match(read(dir, '.boundaries/rules.md'), /^<!-- agent-terminus \d+\.\d+\.\d+/);
-  assert.match(first.stdout, /# BEGIN agent-terminus/);
-  assert.match(first.stdout, /boundaries \/ node/);
   const second = runCli(['init', '--root', dir]);
   assert.doesNotMatch(second.stdout, /created|updated/);
   assert.equal(runCli(['check', '--root', dir]).code, 0);
@@ -80,12 +78,23 @@ test('--git-hook writes commands for the detected languages and prints git confi
   assert.match(hook, /^# npx --yes --package=github:Lupinixio\/agent-terminus#v/m);
   assert.match(preCommitFor({ python: true, node: false, uvLock: false }), /^python -m agent_terminus check$/m);
   assert.match(preCommitFor({ python: false, node: true, uvLock: false }), /^npx --no-install boundaries lint-rules$/m);
+  assert.doesNotMatch(hook, /the CI job/);
+});
+
+test('without --with-ci, next steps skip CODEOWNERS and branch protection', (t) => {
+  const dir = makeTmp(t, { 'package.json': '{}' });
+  const r = runCli(['init', '--root', dir]);
+  assert.equal(r.code, 0);
+  assert.doesNotMatch(r.stdout, /Add this block|Code Owners|status checks|BEGIN agent-terminus/);
+  assert.match(r.stdout, /No server-side check was set up.*\n.*rerun with --with-ci/);
+  assert.equal(existsSync(path.join(dir, '.github')), false);
 });
 
 test('--with-ci writes the workflow and the CODEOWNERS block, warning about the placeholder', (t) => {
   const dir = makeTmp(t, { 'package.json': '{}' });
   const r = runCli(['init', '--root', dir, '--with-ci']);
   assert.match(r.stdout, /WARNING: CODEOWNERS uses the placeholder owner @your-org\/boundary-owners/);
+  assert.match(r.stdout, /status checks "boundaries \/ python" and\/or "boundaries \/ node"/);
   const workflow = parse(read(dir, '.github/workflows/boundaries.yml'));
   assert.deepEqual(Object.keys(workflow.jobs), ['node']);
   assert.match(read(dir, '.github/CODEOWNERS'), /\/\.boundaries\/ @your-org\/boundary-owners/);
