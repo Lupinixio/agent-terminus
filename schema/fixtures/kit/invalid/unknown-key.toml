@@ -1,0 +1,4 @@
+# expect: limits
+schema_version = 1
+[limits]
+x = 1

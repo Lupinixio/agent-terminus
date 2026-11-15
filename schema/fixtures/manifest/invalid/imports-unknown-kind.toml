@@ -1,0 +1,15 @@
+# expect: imports.dynamic
+schema_version = 1
+
+[component]
+name = "ui"
+language = "node"
+root = "src/ui"
+principle = "The UI talks to the API client only."
+decisions = ["docs/decisions/0001-ui.md"]
+
+[imports]
+internal = []
+external = []
+builtin = []
+dynamic = []

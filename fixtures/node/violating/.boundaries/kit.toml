@@ -1,0 +1,2 @@
+schema_version = 1
+decisions = ["docs/decisions/0001-dashboard-boundary.md"]

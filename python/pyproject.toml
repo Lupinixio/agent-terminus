@@ -1,0 +1,55 @@
+[project]
+name = "boundaries-kit"
+version = "0.1.0"
+description = "Hard project limits as checked manifests; AI rules as principles only (Python adapter)."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+  "Private :: Do Not Upload",
+  "Programming Language :: Python :: 3",
+  "Framework :: Pytest",
+]
+
+[project.optional-dependencies]
+importlinter = ["import-linter>=2.16,<3"]
+
+[project.scripts]
+boundaries = "boundaries_kit.cli:main"
+
+[project.entry-points.pytest11]
+boundaries_kit = "boundaries_kit.pytest_plugin"
+
+[dependency-groups]
+dev = [
+  "import-linter>=2.16,<3",
+  "jsonschema>=4.23",
+  "mypy>=1.13",
+  "pytest>=8.3",
+  "ruff>=0.8",
+]
+
+[build-system]
+requires = ["uv_build>=0.9,<0.14"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p pytester"
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+mypy_path = "src,tests"
+files = ["src", "tests"]
+
+[[tool.mypy.overrides]]
+module = ["importlinter.*", "grimp.*", "jsonschema.*"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]

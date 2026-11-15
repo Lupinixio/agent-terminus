@@ -1,0 +1,34 @@
+schema_version = 1
+
+[component]
+name = "dashboard"
+language = "node"
+root = "src/dashboard"
+principle = "The dashboard shows engine state and forwards operator commands through the contract; it never touches storage, processes or the network."
+decisions = ["docs/decisions/0001-dashboard-boundary.md"]
+
+[imports]
+internal = ["src/clock.js", "src/core/contract.js"]
+external = [{ target = "smol-toml", only_from = ["src/dashboard/settings.js"] }]
+builtin = []
+
+[calls]
+forbidden = [
+  "fetch",
+  "eval",
+  { pattern = "child_process.*", reason = "no child processes from the dashboard" },
+  { pattern = "fs.*", reason = "storage belongs to the engine" },
+  { pattern = "*.innerHTML", reason = "render through the template only" },
+]
+
+[[entrypoints]]
+name = "http"
+provider = "./src/dashboard/boundary.ts#httpRoutes"
+exact = ["GET /", "GET /api/status", "POST /api/pause"]
+
+[runtime.bind]
+hosts = ["127.0.0.1"]
+provider = "./src/dashboard/boundary.ts#bindHosts"
+
+[protected]
+paths = ["src/dashboard/boundary.ts"]

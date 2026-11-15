@@ -1,0 +1,21 @@
+# Paths that enforce the project's limits need review by the boundary owners.
+# Replace @your-org/boundary-owners with a real team or user that has write access,
+# then put this block in CODEOWNERS, .github/CODEOWNERS or docs/CODEOWNERS.
+# `boundaries codeowners --owner @team` prints the block for your project,
+# including every path your manifests protect.
+
+# BEGIN boundaries-kit
+/.boundaries/ @your-org/boundary-owners
+/.claude/hooks/protect-boundaries.mjs @your-org/boundary-owners
+/.claude/settings.json @your-org/boundary-owners
+/.claude/settings.local.json @your-org/boundary-owners
+/.githooks/pre-commit @your-org/boundary-owners
+/.github/workflows/boundaries.yml @your-org/boundary-owners
+/.github/CODEOWNERS @your-org/boundary-owners
+/CODEOWNERS @your-org/boundary-owners
+/docs/CODEOWNERS @your-org/boundary-owners
+# Project boundary and safety tests, provider and probe files:
+# add them to a manifest's [protected] paths, then regenerate this block with
+# `boundaries codeowners --owner @your-org/boundary-owners`.
+# /path/to/provider.py @your-org/boundary-owners
+# END boundaries-kit

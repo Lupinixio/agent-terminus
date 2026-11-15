@@ -1,0 +1,18 @@
+schema_version = 1
+decisions = ["docs/decisions/0001-boundaries.md"]
+
+[rules_lint]
+files = ["CLAUDE.md", "docs/agents/**/*.md"]
+allow = ["GET /health"]
+
+[protected]
+paths = ["tests/boundaries/**"]
+
+[hook]
+decision = "deny"
+
+[python]
+sys_path = ["src"]
+
+[node]
+tsconfig = "tsconfig.json"

@@ -1,0 +1,17 @@
+schema_version = 1
+
+[component]
+name = "node-kit"
+language = "node"
+root = "node/src"
+principle = "The Node adapter keeps two runtime dependencies; each parser or peer is used by exactly one module."
+decisions = ["docs/decisions/0002-kit-dependency-limits.md"]
+
+[imports]
+internal = []
+external = [
+  "smol-toml",
+  { target = "@babel/parser", only_from = ["node/src/checks/calls.js"] },
+  { target = "dependency-cruiser", only_from = ["node/src/checks/imports.js"] },
+]
+builtin = "any"

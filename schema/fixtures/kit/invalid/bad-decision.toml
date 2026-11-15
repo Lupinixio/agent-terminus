@@ -1,0 +1,4 @@
+# expect: hook.decision
+schema_version = 1
+[hook]
+decision = "allow"

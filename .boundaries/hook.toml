@@ -1,0 +1,28 @@
+schema_version = 1
+
+[component]
+name = "hook"
+language = "node"
+root = "hooks"
+principle = "The PreToolUse hook only reads: the index, the tool input and the file system. It never writes, spawns, fetches or evaluates code, and it has no dependencies."
+decisions = ["docs/decisions/0002-kit-dependency-limits.md"]
+
+[imports]
+internal = []
+external = []
+builtin = ["fs", "path", "process", "url"]
+
+[calls]
+forbidden = [
+  { pattern = "child_process.*", reason = "the hook never spawns processes" },
+  { pattern = "fetch", reason = "the hook never touches the network" },
+  { pattern = "eval", reason = "the hook never evaluates code" },
+  { pattern = "Function", reason = "the hook never evaluates code" },
+  { pattern = "fs.write*", reason = "the hook only reads" },
+  { pattern = "fs.append*", reason = "the hook only reads" },
+  { pattern = "fs.rm*", reason = "the hook only reads" },
+  { pattern = "fs.unlink*", reason = "the hook only reads" },
+  { pattern = "fs.rename*", reason = "the hook only reads" },
+  { pattern = "fs.copy*", reason = "the hook only reads" },
+  { pattern = "fs.mkdir*", reason = "the hook only reads" },
+]

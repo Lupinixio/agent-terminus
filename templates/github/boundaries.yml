@@ -1,0 +1,44 @@
+# boundaries-kit CI job. Copy to .github/workflows/boundaries.yml.
+# Make "boundaries / python" and/or "boundaries / node" required status checks
+# (see docs/protecting-checks.md). Pinning actions to a full commit SHA is
+# recommended; the tags below are placeholders to adjust.
+name: boundaries
+
+on:
+  pull_request:
+  push:
+    branches: [main] # adjust: your default branch
+
+permissions:
+  contents: read
+
+jobs:
+  # Delete this job if the project has no Python components.
+  python:
+    name: python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # adjust: pin to a SHA
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6 # adjust: pin to a SHA
+      - run: uv sync --locked
+      - run: uv run boundaries check
+
+  # Delete this job if the project has no Node or TypeScript components and does
+  # not use the shared tooling (lint-rules, diff).
+  node:
+    name: node
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # adjust: pin to a SHA
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4 # adjust: pin to a SHA
+        with:
+          node-version: "24" # adjust
+      - run: npm ci
+      - run: npx boundaries check
+      - run: npx boundaries lint-rules
+      - if: github.event_name == 'pull_request'
+        run: npx boundaries diff --base origin/${{ github.base_ref }}
