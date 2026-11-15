@@ -17,6 +17,8 @@ test('aliases resolve through imports and require', () => {
   assert.deepEqual(names("const cp = require('node:child_process');\ncp.exec('x');", 'a.cjs'), ['require', 'child_process.exec']);
   assert.deepEqual(names("require('child_process').exec('x');", 'a.cjs'), ['child_process.exec', 'require']);
   assert.deepEqual(names("import { readFile } from 'node:fs/promises';\nawait readFile('x');"), ['fs.promises.readFile']);
+  assert.deepEqual(names("import { get } from '@scope/pkg';\nget('x');"), ['@scope.pkg.get']);
+  assert.equal(matchCall('fs.*', ['fs', 'promises', 'readFile'], true), false);
 });
 
 test('bare names, globals, new and unknown receivers', () => {

@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `init` without `--with-ci` no longer prints the CODEOWNERS block and the
+  branch-protection steps; it says no server-side check was set up and points to
+  `--with-ci`.
+- The pre-commit template no longer refers to a CI job that may not exist.
+- `docs/manifest.md` documents that Node call names turn `/` in a module
+  specifier into `.` (`node:fs/promises` is matched as `fs.promises.*`).
+
 ## [0.1.0] - 2026-11-15
 
 First public release, as **Agent Terminus** under the MIT licence (developed

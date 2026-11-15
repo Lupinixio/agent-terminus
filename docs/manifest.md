@@ -86,8 +86,11 @@ projects that want them in their own dependency-cruiser config.
 
 Bare names count only when no import binds them (`from os import open; open()` is
 `os.open`, not `open`). In Node, `new X()` counts as a call, `node:` prefixes are
-stripped, and `require()` destructuring, default and namespace imports are
-resolved. A source file that does not parse is a config error.
+stripped, every `/` in a module specifier becomes `.` (`readFile` from
+`node:fs/promises` is `fs.promises.readFile`, `get` from `@scope/pkg` is
+`@scope.pkg.get`), and `require()` destructuring, default and namespace imports
+are resolved. So `fs.*` does not cover `node:fs/promises`; add `fs.promises.*`.
+A source file that does not parse is a config error.
 
 ## `[[entrypoints]]`
 
