@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-15
+
 ### Fixed
 
 - `init` without `--with-ci` no longer prints the CODEOWNERS block and the

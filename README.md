@@ -91,14 +91,14 @@ paths = ["src/orders/dashboard/boundary.py"]
 ### Python
 
 ```sh
-uv add --dev "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.0#subdirectory=python"
+uv add --dev "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.1#subdirectory=python"
 uv run boundaries check
 ```
 
 Write `.boundaries/kit.toml` (set `[python] sys_path = ["src"]` for a `src/`
 layout) and one manifest per component, then `uv run boundaries generate`. The
 `init` and `lint-rules` commands come from the Node CLI:
-`npx --yes --package=github:Lupinixio/agent-terminus#v0.1.0 boundaries init`.
+`npx --yes --package=github:Lupinixio/agent-terminus#v0.1.1 boundaries init`.
 
 Optional: the pytest fixtures `boundary_project` and `secret_sentinels`, helpers
 in `agent_terminus.testing`, and an import-linter contract type
@@ -107,7 +107,7 @@ in `agent_terminus.testing`, and an import-linter contract type
 ### Node / TypeScript
 
 ```sh
-npm i -D github:Lupinixio/agent-terminus#v0.1.0 dependency-cruiser
+npm i -D github:Lupinixio/agent-terminus#v0.1.1 dependency-cruiser
 npx boundaries init
 npx boundaries check
 npx boundaries lint-rules
@@ -160,12 +160,12 @@ CODEOWNERS block, 70 internal error. Contract: [docs/adapters.md](docs/adapters.
 
 ## Distribution
 
-- **Node**: `npm i -D github:Lupinixio/agent-terminus#v0.1.0` (the package is the
+- **Node**: `npm i -D github:Lupinixio/agent-terminus#v0.1.1` (the package is the
   repository root, so no build step), `npm i -D file:../agent-terminus`, or an
   `npm pack` tarball. npm publishing comes later.
-- **Python**: `uv add --dev "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.0#subdirectory=python"`,
+- **Python**: `uv add --dev "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.1#subdirectory=python"`,
   or `uv add --dev --editable ../agent-terminus/python`; with pip,
-  `pip install "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.0#subdirectory=python"`.
+  `pip install "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.1#subdirectory=python"`.
 - **Copy only**: `rules/boundaries.md` and `hooks/protect-boundaries.mjs` are
   self-contained single files.
 - Both packages share one version and one tag (`vX.Y.Z`).
@@ -185,5 +185,5 @@ CODEOWNERS block, 70 internal error. Contract: [docs/adapters.md](docs/adapters.
 
 ## Status and licence
 
-v0.1.0. Released under the [MIT licence](LICENSE). Contributions:
+v0.1.1. Released under the [MIT licence](LICENSE). Contributions:
 [CONTRIBUTING.md](CONTRIBUTING.md).
