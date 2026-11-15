@@ -1,24 +1,31 @@
 [project]
-name = "boundaries-kit"
+name = "agent-terminus"
 version = "0.1.0"
 description = "Hard project limits as checked manifests; AI rules as principles only (Python adapter)."
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = []
 classifiers = [
-  "Private :: Do Not Upload",
   "Programming Language :: Python :: 3",
   "Framework :: Pytest",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Lupinixio/agent-terminus"
+Repository = "https://github.com/Lupinixio/agent-terminus"
+Issues = "https://github.com/Lupinixio/agent-terminus/issues"
+Changelog = "https://github.com/Lupinixio/agent-terminus/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 importlinter = ["import-linter>=2.16,<3"]
 
 [project.scripts]
-boundaries = "boundaries_kit.cli:main"
+boundaries = "agent_terminus.cli:main"
 
 [project.entry-points.pytest11]
-boundaries_kit = "boundaries_kit.pytest_plugin"
+agent_terminus = "agent_terminus.pytest_plugin"
 
 [dependency-groups]
 dev = [

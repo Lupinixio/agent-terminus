@@ -4,7 +4,7 @@ from pathlib import Path
 
 from conftest import component, minimal_project, run_cli, write_files
 
-from boundaries_kit.support import SUPPORTED_KEYS, key_paths, unsupported_keys
+from agent_terminus.support import SUPPORTED_KEYS, key_paths, unsupported_keys
 
 
 def test_key_paths_write_arrays_of_tables_as_key_sub() -> None:

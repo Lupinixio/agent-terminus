@@ -1,4 +1,4 @@
-"""pytest plugin (entry point ``boundaries_kit``): fixtures only, no collected tests.
+"""pytest plugin (entry point ``agent_terminus``): fixtures only, no collected tests.
 
 - ``boundary_project``: the project loaded from the pytest rootdir.
 - ``secret_sentinels``: a factory; ``secret_sentinels(["API_TOKEN"])`` plants fresh

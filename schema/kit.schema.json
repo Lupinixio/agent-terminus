@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:boundaries-kit:kit:1",
-  "title": "boundaries-kit project configuration (.boundaries/kit.toml)",
+  "$id": "urn:agent-terminus:kit:1",
+  "title": "agent-terminus project configuration (.boundaries/kit.toml)",
   "type": "object",
   "additionalProperties": false,
   "required": [

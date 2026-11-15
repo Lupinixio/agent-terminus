@@ -1,4 +1,4 @@
-# boundaries-kit CI job. Copy to .github/workflows/boundaries.yml.
+# agent-terminus CI job. Copy to .github/workflows/boundaries.yml.
 # Make "boundaries / python" and/or "boundaries / node" required status checks
 # (see docs/protecting-checks.md). Pinning actions to a full commit SHA is
 # recommended; the tags below are placeholders to adjust.

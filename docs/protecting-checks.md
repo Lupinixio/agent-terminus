@@ -21,7 +21,7 @@ as a Claude Code `PreToolUse` hook for `Edit|Write|MultiEdit|NotebookEdit|Bash|P
 - Shell tools: a command mentioning `.boundaries` or the literal prefix of a
   protected glob gets the decision unless every segment is read-only (`cat`,
   `grep`, `git diff`, `boundaries check`...). Any remaining `>` counts as a write.
-- Other tools can import `decide()` from `boundaries-kit/hook` and map its result
+- Other tools can import `decide()` from `agent-terminus/hook` and map its result
   to their own format.
 
 ## Tier 2: pre-commit
@@ -39,7 +39,7 @@ git config core.hooksPath .githooks
    `.github/workflows/boundaries.yml` from `templates/github/boundaries.yml` with a
    job per language (`boundaries / python`, `boundaries / node`).
 2. Add the CODEOWNERS block: `boundaries codeowners --owner @your-org/boundary-owners`
-   prints a block between `# BEGIN boundaries-kit` and `# END boundaries-kit`, one
+   prints a block between `# BEGIN agent-terminus` and `# END agent-terminus`, one
    line per protected path. Put it in `.github/CODEOWNERS`, `CODEOWNERS` or
    `docs/CODEOWNERS` (the only locations GitHub reads). The owners need write
    access to the repository. Once the markers exist, `boundaries check` (Node)

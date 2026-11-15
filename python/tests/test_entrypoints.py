@@ -5,10 +5,10 @@ from pathlib import Path
 import pytest
 from conftest import FIXTURES, component, copy_fixture, minimal_project, write_files
 
-from boundaries_kit.checks import ConfigError
-from boundaries_kit.checks.entrypoints import check_entrypoints, compare_entrypoints
-from boundaries_kit.manifest import load_project
-from boundaries_kit.testing import assert_entrypoints
+from agent_terminus.checks import ConfigError
+from agent_terminus.checks.entrypoints import check_entrypoints, compare_entrypoints
+from agent_terminus.manifest import load_project
+from agent_terminus.testing import assert_entrypoints
 
 
 def test_compare_normalizes_whitespace() -> None:

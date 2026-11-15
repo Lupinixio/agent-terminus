@@ -6,7 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
-## [0.1.0]
+## [0.1.0] - 2026-11-15
+
+First public release, as **Agent Terminus** under the MIT licence (developed
+under the working name `boundaries-kit`; see
+`docs/decisions/0003-rename-to-agent-terminus.md`).
 
 ### Added
 
@@ -21,7 +25,7 @@ All notable changes to this project are documented here. The format follows
 - Node adapter (repository root): dependency-cruiser import check, Babel call
   scan, providers and probes, secret-leak detection, `index.json` and
   `depcruise.cjs` generation, and the shared tooling: `lint-rules`, `diff`,
-  `codeowners`, `init`. Test helpers in `boundaries-kit/testing`.
+  `codeowners`, `init`. Test helpers in `agent-terminus/testing`.
 - Claude Code `PreToolUse` hook (`hooks/protect-boundaries.mjs`), git pre-commit
   template, CODEOWNERS snippet and GitHub workflow template.
 - Rule text (`rules/boundaries.md`) and agent snippets.

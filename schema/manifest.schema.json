@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:boundaries-kit:manifest:1",
-  "title": "boundaries-kit component manifest (.boundaries/<component>.toml)",
+  "$id": "urn:agent-terminus:manifest:1",
+  "title": "agent-terminus component manifest (.boundaries/<component>.toml)",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "component"],

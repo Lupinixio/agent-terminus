@@ -6,9 +6,9 @@ from pathlib import Path
 
 from conftest import component, copy_fixture, minimal_project, run_cli, write_files
 
-from boundaries_kit import __version__
-from boundaries_kit.cli import main
-from boundaries_kit.testing import assert_boundaries_hold
+from agent_terminus import __version__
+from agent_terminus.cli import main
+from agent_terminus.testing import assert_boundaries_hold
 
 
 def _run(*args: str, cwd: Path) -> tuple[int, str, str]:

@@ -4,8 +4,8 @@ from pathlib import Path
 
 from conftest import component, copy_fixture, minimal_project, write_files
 
-from boundaries_kit.checks.protected import check_protected
-from boundaries_kit.manifest import load_project
+from agent_terminus.checks.protected import check_protected
+from agent_terminus.manifest import load_project
 
 
 def test_missing_protected_path_and_empty_glob_are_config_errors(tmp_path: Path) -> None:

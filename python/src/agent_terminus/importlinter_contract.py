@@ -4,7 +4,7 @@ Consumer config (pyproject.toml)::
 
     [tool.importlinter]
     root_packages = ["orders"]
-    contract_types = ["boundaries: boundaries_kit.importlinter_contract.BoundaryContract"]
+    contract_types = ["boundaries: agent_terminus.importlinter_contract.BoundaryContract"]
 
     [[tool.importlinter.contracts]]
     name = "Component boundaries"

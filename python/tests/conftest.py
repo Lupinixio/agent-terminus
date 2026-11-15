@@ -61,9 +61,9 @@ class CliResult:
 
 
 def run_cli(*args: str, cwd: Path | None = None) -> CliResult:
-    """Runs ``python -m boundaries_kit`` in a child process."""
+    """Runs ``python -m agent_terminus`` in a child process."""
     r = subprocess.run(
-        [sys.executable, "-m", "boundaries_kit", *args],
+        [sys.executable, "-m", "agent_terminus", *args],
         cwd=cwd or REPO,
         capture_output=True,
         text=True,

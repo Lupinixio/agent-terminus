@@ -11,7 +11,7 @@ import pytest
 from conftest import REPO
 from jsonschema import Draft202012Validator
 
-from boundaries_kit.validate import validate_kit, validate_manifest
+from agent_terminus.validate import validate_kit, validate_manifest
 
 SCHEMAS = {
     kind: Draft202012Validator(json.loads((REPO / "schema" / f"{kind}.schema.json").read_text(encoding="utf-8")))

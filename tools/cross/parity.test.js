@@ -12,8 +12,8 @@ import { pythonEval, REPO, ROOTS } from './helpers.js';
 
 const PY_INDEX =
   'import sys\n' +
-  'from boundaries_kit.index_file import build_index\n' +
-  'from boundaries_kit.manifest import load_project\n' +
+  'from agent_terminus.index_file import build_index\n' +
+  'from agent_terminus.manifest import load_project\n' +
   'p = load_project(sys.argv[1])\n' +
   'assert not p.problems, p.problems\n' +
   'sys.stdout.buffer.write(build_index(p).encode("utf-8"))\n';
@@ -34,7 +34,7 @@ for (const root of ROOTS) {
 test('BUILTIN_PROTECTED is equal in the JSON, Node, Python and hook copies', () => {
   const canonical = JSON.parse(readFileSync(path.join(REPO, 'schema/builtin-protected.json'), 'utf8'));
   const fromPython = JSON.parse(
-    pythonEval('import json\nfrom boundaries_kit.support import BUILTIN_PROTECTED\nprint(json.dumps(list(BUILTIN_PROTECTED)))'),
+    pythonEval('import json\nfrom agent_terminus.support import BUILTIN_PROTECTED\nprint(json.dumps(list(BUILTIN_PROTECTED)))'),
   );
   assert.deepEqual([...NODE_PROTECTED], canonical);
   assert.deepEqual([...HOOK_PROTECTED], canonical);
@@ -45,7 +45,7 @@ test('versions are equal everywhere', () => {
   const pkg = JSON.parse(readFileSync(path.join(REPO, 'package.json'), 'utf8'));
   const pyproject = readFileSync(path.join(REPO, 'python/pyproject.toml'), 'utf8');
   const pyprojectVersion = /^version = "([^"]+)"/m.exec(pyproject)?.[1];
-  const pythonVersion = pythonEval('import boundaries_kit\nprint(boundaries_kit.__version__)').trim();
+  const pythonVersion = pythonEval('import agent_terminus\nprint(agent_terminus.__version__)').trim();
   const changelog = readFileSync(path.join(REPO, 'CHANGELOG.md'), 'utf8');
   assert.equal(VERSION, pkg.version);
   assert.equal(KIT_VERSION, pkg.version);

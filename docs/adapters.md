@@ -4,12 +4,12 @@ An adapter checks the manifests of one language. v0.1.0 ships two:
 
 | Adapter | Package | Runtime dependencies | Import check | Call scan |
 |---|---|---|---|---|
-| `python` | `boundaries-kit` (PyPI name, in `python/`), import name `boundaries_kit` | none | own AST scanner | own AST scanner |
-| `node` | `boundaries-kit` (npm, repository root) | `smol-toml`, `@babel/parser`; optional peer `dependency-cruiser ^18` | dependency-cruiser `cruise()` | `@babel/parser` + own visitor |
+| `python` | `agent-terminus` (PyPI name, in `python/`), import name `agent_terminus` | none | own AST scanner | own AST scanner |
+| `node` | `agent-terminus` (npm, repository root) | `smol-toml`, `@babel/parser`; optional peer `dependency-cruiser ^18` | dependency-cruiser `cruise()` | `@babel/parser` + own visitor |
 
 Shared tooling (`lint-rules`, `diff`, `codeowners`, `init`) is in the Node CLI
 only; Python-only projects run it with
-`npx --yes --package=github:<owner>/boundaries-kit#v0.1.0 boundaries <command>`.
+`npx --yes --package=github:Lupinixio/agent-terminus#v0.1.0 boundaries <command>`.
 
 ## CLI contract
 
@@ -92,18 +92,18 @@ checkout.
 
 ## Python extras
 
-- `boundaries_kit.testing`: `secret_sentinels(names)` (context manager),
+- `agent_terminus.testing`: `secret_sentinels(names)` (context manager),
   `assert_no_secret(texts, sentinels)`, `assert_entrypoints(manifest, actual,
   group="http")`, `assert_boundaries_hold(root=".")`. Each raises
   `AssertionError` listing every finding.
 - pytest plugin (registered automatically): fixtures `boundary_project` and
   `secret_sentinels` (a factory; restored at teardown).
-- import-linter contract type (extra `boundaries-kit[importlinter]`):
+- import-linter contract type (extra `agent-terminus[importlinter]`):
 
   ```toml
   [tool.importlinter]
   root_packages = ["orders"]
-  contract_types = ["boundaries: boundaries_kit.importlinter_contract.BoundaryContract"]
+  contract_types = ["boundaries: agent_terminus.importlinter_contract.BoundaryContract"]
 
   [[tool.importlinter.contracts]]
   name = "Component boundaries"
@@ -116,7 +116,7 @@ checkout.
 
 ## Node extras
 
-`boundaries-kit/testing` (framework-agnostic, throws `node:assert`
+`agent-terminus/testing` (framework-agnostic, throws `node:assert`
 `AssertionError`): `assertEntrypoints(manifest, actual, group?)`,
 `withSecretSentinels(names, fn)`, `assertNoSecret(texts, sentinels)`,
 `checkBoundaries({ root })`. The package root exports `loadProject`,
