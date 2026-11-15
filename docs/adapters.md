@@ -1,6 +1,6 @@
 # Adapters
 
-An adapter checks the manifests of one language. v0.1.0 ships two:
+An adapter checks the manifests of one language. v0.1.1 ships two:
 
 | Adapter | Package | Runtime dependencies | Import check | Call scan |
 |---|---|---|---|---|
@@ -9,7 +9,7 @@ An adapter checks the manifests of one language. v0.1.0 ships two:
 
 Shared tooling (`lint-rules`, `diff`, `codeowners`, `init`) is in the Node CLI
 only; Python-only projects run it with
-`npx --yes --package=github:Lupinixio/agent-terminus#v0.1.0 boundaries <command>`.
+`npx --yes --package=github:Lupinixio/agent-terminus#v0.1.1 boundaries <command>`.
 
 ## CLI contract
 

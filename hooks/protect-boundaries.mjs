@@ -16,7 +16,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-export const KIT_VERSION = '0.1.0';
+export const KIT_VERSION = '0.1.1';
 
 /** Built-in protected paths (copy of schema/builtin-protected.json). */
 export const BUILTIN_PROTECTED = Object.freeze([

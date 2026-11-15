@@ -1,6 +1,6 @@
 {
   "name": "agent-terminus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Hard project limits as checked manifests; AI rules as principles only.",
   "type": "module",
   "license": "MIT",
