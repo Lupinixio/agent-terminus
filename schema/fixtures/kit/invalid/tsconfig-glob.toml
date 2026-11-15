@@ -1,0 +1,4 @@
+# expect: node.tsconfig
+schema_version = 1
+[node]
+tsconfig = "tsconfig.*.json"

@@ -1,0 +1,44 @@
+schema_version = 1
+
+[component]
+name = "web"
+language = "python"
+root = "src/app/web"
+package = "app.web"
+principle = "The web layer only renders and routes."
+exclude = ["src/app/web/tests/**"]
+decisions = ["docs/decisions/0001-web.md"]
+
+[imports]
+internal = ["app.clock", { target = "app.core.contract", only_from = ["app.web.handlers"] }]
+external = ["starlette", { target = "uvicorn", only_from = ["app.web.server"] }]
+builtin = ["json", "logging"]
+
+[calls]
+forbidden = [
+  "open",
+  "*.open",
+  { pattern = "subprocess.*", reason = "no child processes" },
+  { pattern = "os.system" },
+]
+
+[[entrypoints]]
+name = "http"
+provider = "app.web.boundary:http_routes"
+exact = ["GET /", "POST /api/pause"]
+
+[[entrypoints]]
+name = "cli-commands"
+provider = "app.web.boundary:commands"
+exact = []
+
+[runtime.bind]
+hosts = ["127.0.0.1", "::1"]
+provider = "app.web.boundary:bind_hosts"
+
+[runtime.secrets]
+names = ["API_TOKEN", "_private_key"]
+probe = "app.web.boundary:secret_probe"
+
+[protected]
+paths = ["src/app/web/boundary.py", "tests/boundaries/**"]

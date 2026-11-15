@@ -1,0 +1,4 @@
+# expect: rules_lint.deny
+schema_version = 1
+[rules_lint]
+deny = ["x"]

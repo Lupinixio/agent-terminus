@@ -1,0 +1,9 @@
+# expect: component.decisions[0]
+schema_version = 1
+
+[component]
+name = "ui"
+language = "node"
+root = "src/ui"
+principle = "The UI talks to the API client only."
+decisions = ["docs/*.md"]

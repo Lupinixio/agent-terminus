@@ -1,0 +1,4 @@
+# expect: python.sys_path[0]
+schema_version = 1
+[python]
+sys_path = ["/usr/lib"]

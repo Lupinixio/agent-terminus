@@ -1,0 +1,11 @@
+# expect: component.owner
+schema_version = 1
+
+[component]
+name = "web"
+language = "python"
+root = "src/app/web"
+package = "app.web"
+owner = "me"
+principle = "The web layer only renders and routes."
+decisions = ["docs/decisions/0001-web.md"]

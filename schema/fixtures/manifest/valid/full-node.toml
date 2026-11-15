@@ -1,0 +1,29 @@
+schema_version = 1
+
+[component]
+name = "ui"
+language = "node"
+root = "src/ui"
+principle = "The UI talks to the API client only."
+exclude = ["src/ui/**/*.test.ts"]
+decisions = ["docs/decisions/0001-ui.md"]
+
+[imports]
+internal = ["src/api-client", { target = "src/shared/format.ts", only_from = ["src/ui/table"] }]
+external = ["react", "@tanstack/query", { target = "zod", only_from = ["src/ui/forms"] }]
+builtin = []
+
+[calls]
+forbidden = ["fetch", "eval", "child_process.*", "fs.write*", { pattern = "*.innerHTML", reason = "no raw HTML" }]
+
+[[entrypoints]]
+name = "routes"
+provider = "./src/ui/boundary.ts#routes"
+exact = ["/", "/settings"]
+
+[runtime.secrets]
+names = ["UI_API_KEY"]
+probe = "./src/ui/boundary.ts#secretProbe"
+
+[protected]
+paths = ["src/ui/boundary.ts"]

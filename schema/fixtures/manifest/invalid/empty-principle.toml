@@ -1,0 +1,9 @@
+# expect: component.principle
+schema_version = 1
+
+[component]
+name = "ui"
+language = "node"
+root = "src/ui"
+principle = ""
+decisions = ["docs/decisions/0001-ui.md"]
