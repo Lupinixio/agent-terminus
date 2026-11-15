@@ -1,0 +1,5 @@
+{
+  "name": "fixture-node-violating",
+  "private": true,
+  "type": "module"
+}

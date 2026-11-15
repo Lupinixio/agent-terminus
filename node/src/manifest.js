@@ -3,6 +3,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { parse as parseToml } from 'smol-toml';
+import { decisionProblems } from './checks/decisions.js';
 import { hasGlobChars } from './glob.js';
 import { globFiles } from './files.js';
 import { defaultKit, kitFromRaw } from './kit-config.js';
@@ -118,9 +119,7 @@ function commonRules(root, m) {
   if (m.component.name !== stem) {
     problems.push({ file: m.file, key: 'component.name', message: `name "${m.component.name}" must equal the file name "${stem}"` });
   }
-  m.component.decisions.forEach((d, i) => {
-    if (!exists(root, d)) problems.push({ file: m.file, key: `component.decisions[${i}]`, message: `decision file ${d} does not exist` });
-  });
+  problems.push(...decisionProblems(root, m.component.decisions, m.file, 'component.decisions'));
   const rootAbs = path.join(root, m.component.root);
   if (!existsSync(rootAbs) || !statSync(rootAbs).isDirectory()) {
     problems.push({ file: m.file, key: 'component.root', message: `component root ${m.component.root} is not a directory` });
@@ -217,9 +216,7 @@ export async function loadProject(root) {
       problems.push(...kitProblems);
       if (kitProblems.length === 0) {
         kit = kitFromRaw(/** @type {Record<string, any>} */ (parsed.raw), rel);
-        kit.decisions.forEach((d, i) => {
-          if (!exists(absRoot, d)) problems.push({ file: rel, key: `decisions[${i}]`, message: `decision file ${d} does not exist` });
-        });
+        problems.push(...decisionProblems(absRoot, kit.decisions, rel, 'decisions'));
         kit.protected.forEach((p, i) => problems.push(...protectedPathProblems(absRoot, p, rel, `protected.paths[${i}]`)));
         if (kit.nodeTsconfig && !exists(absRoot, kit.nodeTsconfig)) {
           problems.push({ file: rel, key: 'node.tsconfig', message: `${kit.nodeTsconfig} does not exist` });

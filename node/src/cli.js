@@ -2,7 +2,11 @@
 import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { check } from './check.js';
+import { codeownersBlock, DEFAULT_OWNER } from './codeowners.js';
+import { diffBoundaries } from './diff.js';
 import { generateFiles } from './generate.js';
+import { init } from './init.js';
+import { formatFinding, lintRules } from './lint-rules.js';
 import { ADAPTER, loadProject } from './manifest.js';
 import { EXIT, emptyReport, exitCode, renderJson, renderText } from './report.js';
 import { SCHEMA_VERSIONS, SUPPORTED_KEYS } from './support.js';
@@ -15,6 +19,11 @@ Usage:
   boundaries validate   [--root .] [--format text|json]
   boundaries generate   [--root .]
   boundaries keys       --json
+  boundaries lint-rules [--root .] [--files GLOB]...
+  boundaries diff       --base REF [--root .]
+  boundaries codeowners [--root .] [--owner @team]
+  boundaries init       [--root .] [--claude] [--agents-md] [--git-hook] [--with-ci]
+                        [--owner @team] [--update] [--dry-run]
 
 Exit codes: 0 pass, 1 violations, 2 usage, 3 config, 4 stale generated files, 70 internal error.
 `;
@@ -98,6 +107,73 @@ const COMMANDS = {
     const payload = { adapter: ADAPTER, schema_versions: [...SCHEMA_VERSIONS], supported_keys: [...SUPPORTED_KEYS] };
     io.out(values.json ? `${JSON.stringify(payload, null, 2)}\n` : `${SUPPORTED_KEYS.join('\n')}\n`);
     return EXIT.OK;
+  },
+
+  async 'lint-rules'(args, io) {
+    const { values } = parse(args, { root: { type: 'string', default: '.' }, files: { type: 'string', multiple: true } });
+    const project = await loadProject(path.resolve(io.cwd, values.root));
+    if (project.problems.length > 0) {
+      const report = emptyReport();
+      report.errors.push(...project.problems);
+      io.err(renderText(report));
+      return EXIT.CONFIG;
+    }
+    const findings = lintRules(project, { files: values.files ?? null });
+    for (const f of findings) io.out(`${formatFinding(f)}\n`);
+    io.out(
+      findings.length === 0
+        ? 'lint-rules: ok\n'
+        : `lint-rules: ${findings.length} manifest-owned identifier(s) restated in rules files; point to the manifest instead, or list them in kit.toml rules_lint.allow\n`,
+    );
+    return findings.length === 0 ? EXIT.OK : EXIT.VIOLATIONS;
+  },
+
+  async diff(args, io) {
+    const { values } = parse(args, { root: { type: 'string', default: '.' }, base: { type: 'string' } });
+    if (!values.base) throw new UsageError('diff needs --base <ref>');
+    const result = diffBoundaries({ root: path.resolve(io.cwd, values.root), base: values.base });
+    (result.code === EXIT.USAGE ? io.err : io.out)(`${result.lines.join('\n')}\n`);
+    return result.code;
+  },
+
+  async codeowners(args, io) {
+    const { values } = parse(args, { root: { type: 'string', default: '.' }, owner: { type: 'string' } });
+    const project = await loadProject(path.resolve(io.cwd, values.root));
+    if (project.problems.length > 0) {
+      const report = emptyReport();
+      report.errors.push(...project.problems);
+      io.err(renderText(report));
+      return EXIT.CONFIG;
+    }
+    if (values.owner !== undefined && !/^@\S+$|^\S+@\S+$/.test(values.owner)) throw new UsageError('--owner must be @user, @org/team or an email');
+    io.out(codeownersBlock(project, values.owner ?? DEFAULT_OWNER));
+    return EXIT.OK;
+  },
+
+  async init(args, io) {
+    const { values } = parse(args, {
+      root: { type: 'string', default: '.' },
+      claude: { type: 'boolean', default: false },
+      'agents-md': { type: 'boolean', default: false },
+      'git-hook': { type: 'boolean', default: false },
+      'with-ci': { type: 'boolean', default: false },
+      owner: { type: 'string' },
+      update: { type: 'boolean', default: false },
+      'dry-run': { type: 'boolean', default: false },
+    });
+    if (values.owner !== undefined && !/^@\S+$|^\S+@\S+$/.test(values.owner)) throw new UsageError('--owner must be @user, @org/team or an email');
+    const result = await init({
+      root: path.resolve(io.cwd, values.root),
+      claude: values.claude,
+      agentsMd: values['agents-md'],
+      gitHook: values['git-hook'],
+      withCi: values['with-ci'],
+      owner: values.owner,
+      update: values.update,
+      dryRun: values['dry-run'],
+    });
+    io.out(`${result.lines.join('\n')}\n`);
+    return result.code;
   },
 };
 

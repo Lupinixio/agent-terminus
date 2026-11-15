@@ -119,3 +119,22 @@ test('bin runs end to end', (t) => {
   assert.equal(r.code, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /boundaries \(node\): ok/);
 });
+
+test('fixtures: passing exits 0, violating exits 1 with every check represented', (t) => {
+  const passing = runCli(['check', '--root', 'fixtures/node/passing']);
+  assert.equal(passing.code, 0, passing.stdout + passing.stderr);
+  const violating = runCli(['check', '--root', 'fixtures/node/violating', '--format', 'json']);
+  assert.equal(violating.code, 1, violating.stdout + violating.stderr);
+  const report = JSON.parse(violating.stdout);
+  const checks = new Set(report.results.map((/** @type {{ check: string }} */ r) => r.check));
+  assert.deepEqual([...checks].sort(), ['calls', 'entrypoints', 'imports', 'runtime.bind']);
+  const tmp = makeTmp(t);
+  assert.ok(tmp);
+});
+
+test('checkBoundaries returns the report', async () => {
+  const { checkBoundaries } = await import('../src/testing.js');
+  const report = await checkBoundaries({ root: 'fixtures/node/passing' });
+  assert.deepEqual(report.results, []);
+  assert.deepEqual(report.errors, []);
+});

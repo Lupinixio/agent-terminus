@@ -39,7 +39,9 @@ export function renderText(report, info = {}) {
   for (const r of report.results) {
     lines.push(`${r.component} ${r.check}${r.location ? ` ${r.location}` : ''}: ${r.message} [${r.key}]`);
   }
-  for (const s of report.stale) lines.push(`stale: ${s} (run boundaries generate)`);
+  for (const s of report.stale) {
+    lines.push(`stale: ${s} (run ${s.endsWith('CODEOWNERS') ? 'boundaries codeowners and update the marked block' : 'boundaries generate'})`);
+  }
   for (const s of report.skipped) lines.push(`skipped: ${s.component} (${s.reason})`);
   const code = exitCode(report);
   const checked = info.checked === undefined ? '' : `, ${info.checked} component(s) checked`;

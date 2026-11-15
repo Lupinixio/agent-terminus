@@ -1,5 +1,13 @@
 // `boundaries check`: validate, run every check for Node components, verify
-// generated files. Checks return violations; only the CLI picks exit codes.
+// generated files and the CODEOWNERS block. Checks return violations; only the
+// CLI picks exit codes.
+import { checkCalls } from './checks/calls.js';
+import { checkEntrypoints } from './checks/entrypoints.js';
+import { checkImports } from './checks/imports.js';
+import { checkProtected } from './checks/protected.js';
+import { checkBind, checkSecrets } from './checks/runtime.js';
+import { codeownersGaps } from './codeowners.js';
+import { ConfigError } from './errors.js';
 import { generateFiles } from './generate.js';
 import { ADAPTER, loadProject } from './manifest.js';
 import { emptyReport } from './report.js';
@@ -11,25 +19,8 @@ import { emptyReport } from './report.js';
  * @typedef {import('./types.js').Violation} Violation
  */
 
-/**
- * Raised by a check when the project's configuration or sources make the check
- * impossible (exit 3).
- */
-export class ConfigError extends Error {
-  /**
-   * @param {string} file
-   * @param {string} key
-   * @param {string} message
-   */
-  constructor(file, key, message) {
-    super(message);
-    this.file = file;
-    this.key = key;
-  }
-}
-
 /** @type {((project: Project, manifest: Manifest) => Promise<Violation[]>)[]} */
-const CHECKS = [];
+const CHECKS = [checkImports, checkCalls, checkEntrypoints, checkBind, checkSecrets, checkProtected];
 
 /**
  * @param {{ root?: string, components?: string[] }} [options]
@@ -59,5 +50,7 @@ export async function check(options = {}) {
   }
   if (report.errors.length > 0) return { report, checked: selected.length, project };
   for (const { file, stale } of generateFiles({ project, write: false })) if (stale) report.stale.push(file);
+  const gaps = codeownersGaps(project);
+  if (gaps && gaps.missing.length > 0) report.stale.push(gaps.file);
   return { report, checked: selected.length, project };
 }
