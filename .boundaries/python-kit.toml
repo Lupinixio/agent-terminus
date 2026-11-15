@@ -3,15 +3,15 @@ schema_version = 1
 [component]
 name = "python-kit"
 language = "python"
-root = "python/src/boundaries_kit"
-package = "boundaries_kit"
+root = "python/src/agent_terminus"
+package = "agent_terminus"
 principle = "The Python adapter has no runtime dependencies; the optional integrations each live in one module."
-decisions = ["docs/decisions/0002-kit-dependency-limits.md"]
+decisions = ["docs/decisions/0002-kit-dependency-limits.md", "docs/decisions/0003-rename-to-agent-terminus.md"]
 
 [imports]
 internal = []
 external = [
-  { target = "importlinter", only_from = ["boundaries_kit.importlinter_contract"] },
-  { target = "pytest", only_from = ["boundaries_kit.pytest_plugin"] },
+  { target = "importlinter", only_from = ["agent_terminus.importlinter_contract"] },
+  { target = "pytest", only_from = ["agent_terminus.pytest_plugin"] },
 ]
 builtin = "any"

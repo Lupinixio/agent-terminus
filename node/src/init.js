@@ -12,10 +12,10 @@ import { VERSION } from './version.js';
 export const KIT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const HOOK_COMMAND = 'node "$CLAUDE_PROJECT_DIR/.claude/hooks/protect-boundaries.mjs"';
 export const HOOK_MATCHER = 'Edit|Write|MultiEdit|NotebookEdit|Bash|PowerShell';
-const AGENTS_START = '<!-- boundaries-kit:rules:start -->';
-const AGENTS_END = '<!-- boundaries-kit:rules:end -->';
-const PRE_COMMIT_BEGIN = '# BEGIN boundaries-kit commands';
-const PRE_COMMIT_END = '# END boundaries-kit commands';
+const AGENTS_START = '<!-- agent-terminus:rules:start -->';
+const AGENTS_END = '<!-- agent-terminus:rules:end -->';
+const PRE_COMMIT_BEGIN = '# BEGIN agent-terminus commands';
+const PRE_COMMIT_END = '# END agent-terminus commands';
 
 /**
  * @typedef {{
@@ -24,7 +24,7 @@ const PRE_COMMIT_END = '# END boundaries-kit commands';
  * }} InitOptions
  */
 
-const KIT_TOML = `# boundaries-kit project configuration. Component limits live in
+const KIT_TOML = `# agent-terminus project configuration. Component limits live in
 # .boundaries/<component>.toml (see component.toml.example).
 schema_version = 1
 
@@ -39,7 +39,7 @@ paths = []
 
 const COMPONENT_EXAMPLE = `# Example component manifest. Copy to .boundaries/<name>.toml (the file name
 # must equal component.name), keep the sections you need, and link a decision
-# record. Reference: docs/manifest.md in boundaries-kit.
+# record. Reference: docs/manifest.md in agent-terminus.
 schema_version = 1
 
 [component]
@@ -120,9 +120,9 @@ export function workflowFor(langs) {
 export function preCommitFor(langs) {
   /** @type {string[]} */
   const commands = [];
-  if (langs.python) commands.push(langs.uvLock ? 'uv run boundaries check' : 'python -m boundaries_kit check');
+  if (langs.python) commands.push(langs.uvLock ? 'uv run boundaries check' : 'python -m agent_terminus check');
   if (langs.node) commands.push('npx --no-install boundaries check', 'npx --no-install boundaries lint-rules');
-  else commands.push('# npx --yes --package=github:<owner>/boundaries-kit#v' + VERSION + ' boundaries lint-rules');
+  else commands.push('# npx --yes --package=github:Lupinixio/agent-terminus#v' + VERSION + ' boundaries lint-rules');
   const template = kitFile('hooks/pre-commit.sh');
   return template.replace(`${PRE_COMMIT_BEGIN}\n${PRE_COMMIT_END}`, [PRE_COMMIT_BEGIN, ...commands, PRE_COMMIT_END].join('\n'));
 }
@@ -184,7 +184,7 @@ export async function init(options) {
   };
 
   place('.boundaries/kit.toml', KIT_TOML);
-  const rules = `<!-- boundaries-kit ${VERSION}: copy of rules/boundaries.md. Refresh with: boundaries init --update -->\n${kitFile('rules/boundaries.md')}`;
+  const rules = `<!-- agent-terminus ${VERSION}: copy of rules/boundaries.md. Refresh with: boundaries init --update -->\n${kitFile('rules/boundaries.md')}`;
   place('.boundaries/rules.md', rules, { update: options.update });
   place('.boundaries/component.toml.example', COMPONENT_EXAMPLE, { update: options.update });
 
@@ -270,13 +270,13 @@ export async function init(options) {
     const rel = '.github/CODEOWNERS';
     const abs = path.join(root, rel);
     const current = existsSync(abs) ? readFileSync(abs, 'utf8') : null;
-    if (current !== null && current.includes(CO_BEGIN)) say(`unchanged ${rel} (already has a boundaries-kit block; refresh it with boundaries codeowners)`);
+    if (current !== null && current.includes(CO_BEGIN)) say(`unchanged ${rel} (already has an agent-terminus block; refresh it with boundaries codeowners)`);
     else {
       if (!dry) {
         mkdirSync(path.dirname(abs), { recursive: true });
         writeFileSync(abs, current === null ? block : `${current.replace(/\s*$/, '')}\n\n${block}`);
       }
-      say(`${dry ? 'would append' : 'appended'} the boundaries-kit block to ${rel}`);
+      say(`${dry ? 'would append' : 'appended'} the agent-terminus block to ${rel}`);
     }
   }
   if (!options.owner && options.withCi) {

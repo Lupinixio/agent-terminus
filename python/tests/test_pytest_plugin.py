@@ -10,7 +10,7 @@ def test_fixtures_are_registered(pytester: pytest.Pytester) -> None:
     shutil.copytree(FIXTURES / "passing", pytester.path, dirs_exist_ok=True)
     pytester.makepyfile(
         test_boundaries="""
-        from boundaries_kit.testing import assert_no_secret
+        from agent_terminus.testing import assert_no_secret
 
         def test_project(boundary_project):
             assert [m.component.name for m in boundary_project.manifests] == ["dashboard"]

@@ -4,7 +4,7 @@ import json
 
 from conftest import REPO
 
-from boundaries_kit.glob import literal_prefix, match
+from agent_terminus.glob import literal_prefix, match
 
 
 def test_shared_glob_cases() -> None:

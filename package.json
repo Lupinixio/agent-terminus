@@ -1,10 +1,17 @@
 {
-  "name": "boundaries-kit",
+  "name": "agent-terminus",
   "version": "0.1.0",
   "description": "Hard project limits as checked manifests; AI rules as principles only.",
-  "private": true,
   "type": "module",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lupinixio/agent-terminus.git"
+  },
+  "homepage": "https://github.com/Lupinixio/agent-terminus#readme",
+  "bugs": {
+    "url": "https://github.com/Lupinixio/agent-terminus/issues"
+  },
   "engines": {
     "node": "^22.18.0 || >=24.11.0"
   },

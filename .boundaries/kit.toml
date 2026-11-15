@@ -1,4 +1,8 @@
-# boundaries-kit's own limits (dogfood). Changing any file here needs a new
+# agent-terminus's own limits (dogfood). Changing any file here needs a new
 # decision record under docs/decisions/ and a human's approval.
 schema_version = 1
-decisions = ["docs/decisions/0001-kit-design.md", "docs/decisions/0002-kit-dependency-limits.md"]
+decisions = [
+  "docs/decisions/0001-kit-design.md",
+  "docs/decisions/0002-kit-dependency-limits.md",
+  "docs/decisions/0003-rename-to-agent-terminus.md",
+]

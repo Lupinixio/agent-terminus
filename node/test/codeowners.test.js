@@ -25,7 +25,7 @@ test('CLI prints the block; a stale marker block gives exit 4; a fresh one passe
   const dir = copyFixture(t, 'fixtures/node/passing');
   const printed = runCli(['codeowners', '--root', dir, '--owner', '@acme/owners']);
   assert.equal(printed.code, 0);
-  writeFiles(dir, { '.github/CODEOWNERS': '# BEGIN boundaries-kit\n/.boundaries/ @acme/owners\n# END boundaries-kit\n' });
+  writeFiles(dir, { '.github/CODEOWNERS': '# BEGIN agent-terminus\n/.boundaries/ @acme/owners\n# END agent-terminus\n' });
   const stale = runCli(['check', '--root', dir, '--format', 'json']);
   assert.equal(stale.code, 4, stale.stdout);
   assert.deepEqual(JSON.parse(stale.stdout).stale, ['.github/CODEOWNERS']);

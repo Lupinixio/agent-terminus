@@ -5,8 +5,8 @@ import { protectedGlobs } from './index-file.js';
 
 /** @typedef {import('./types.js').Project} Project */
 
-export const BEGIN = '# BEGIN boundaries-kit';
-export const END = '# END boundaries-kit';
+export const BEGIN = '# BEGIN agent-terminus';
+export const END = '# END agent-terminus';
 export const DEFAULT_OWNER = '@your-org/boundary-owners';
 export const CODEOWNERS_LOCATIONS = Object.freeze(['.github/CODEOWNERS', 'CODEOWNERS', 'docs/CODEOWNERS']);
 

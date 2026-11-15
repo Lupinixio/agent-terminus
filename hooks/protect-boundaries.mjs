@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// boundaries-kit: protect-boundaries hook (Claude Code PreToolUse).
+// agent-terminus: protect-boundaries hook (Claude Code PreToolUse).
 //
 // Asks (or denies) before an agent edits files that enforce the project's
 // limits: `.boundaries/**`, this hook, agent settings, CODEOWNERS, the CI
@@ -191,7 +191,7 @@ export function decide({ toolName, toolInput, cwd }) {
     if (index.corrupt) return result('ask', `${INDEX_FILE} is unreadable, so every edit asks. Run boundaries generate.`);
     const nocase = process.platform === 'win32';
     const hit = index.globs.find((glob) => matchGlob(glob, rel, { nocase }));
-    return hit ? result(index.decision, `${rel} is protected by boundaries-kit (${hit}). ${suffix}`) : null;
+    return hit ? result(index.decision, `${rel} is protected by agent-terminus (${hit}). ${suffix}`) : null;
   }
   if (SHELL_TOOLS.has(toolName)) {
     const command = toolInput.command;

@@ -5,9 +5,9 @@ from pathlib import Path
 import pytest
 from conftest import FIXTURES, component, minimal_project, write_files
 
-from boundaries_kit.checks import ConfigError
-from boundaries_kit.checks.calls import check_calls, find_calls, match_call
-from boundaries_kit.manifest import load_project
+from agent_terminus.checks import ConfigError
+from agent_terminus.checks.calls import check_calls, find_calls, match_call
+from agent_terminus.manifest import load_project
 
 
 def _names(code: str) -> list[str]:

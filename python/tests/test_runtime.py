@@ -10,11 +10,11 @@ from pathlib import Path
 import pytest
 from conftest import FIXTURES, component, copy_fixture, minimal_project, write_files
 
-from boundaries_kit.checks import ConfigError
-from boundaries_kit.checks.runtime import capture_output, check_bind, check_secrets
-from boundaries_kit.manifest import load_project
-from boundaries_kit.sentinels import find_leaks, make_sentinel, sentinel_forms
-from boundaries_kit.testing import assert_no_secret, secret_sentinels
+from agent_terminus.checks import ConfigError
+from agent_terminus.checks.runtime import capture_output, check_bind, check_secrets
+from agent_terminus.manifest import load_project
+from agent_terminus.sentinels import find_leaks, make_sentinel, sentinel_forms
+from agent_terminus.testing import assert_no_secret, secret_sentinels
 
 
 def test_bind_violating_fixture_binds_to_all_interfaces() -> None:

@@ -8,7 +8,7 @@ from pathlib import Path
 
 from conftest import copy_fixture
 
-from boundaries_kit.importlinter_contract import BoundaryContract
+from agent_terminus.importlinter_contract import BoundaryContract
 
 RUNNER = (
     "import sys; sys.path.insert(0, 'src'); from importlinter.cli import lint_imports; "
@@ -19,7 +19,7 @@ RUNNER = (
 def _config(package: str) -> str:
     return (
         f'[tool.importlinter]\nroot_packages = ["{package}"]\n'
-        'contract_types = ["boundaries: boundaries_kit.importlinter_contract.BoundaryContract"]\n\n'
+        'contract_types = ["boundaries: agent_terminus.importlinter_contract.BoundaryContract"]\n\n'
         '[[tool.importlinter.contracts]]\nname = "Component boundaries"\ntype = "boundaries"\n'
     )
 

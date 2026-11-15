@@ -1,4 +1,10 @@
-# boundaries-kit
+# Agent Terminus
+
+**Agent boundaries, set in stone.**
+
+Named after Terminus, the Roman god of boundaries, whose boundary stones could
+not be moved. Agent Terminus (`agent-terminus`) turns a project's hard limits
+into checks that AI coding agents cannot talk their way past.
 
 Hard project limits as checked manifests; AI rules as principles only.
 
@@ -85,30 +91,30 @@ paths = ["src/orders/dashboard/boundary.py"]
 ### Python
 
 ```sh
-uv add --dev "boundaries-kit @ git+https://<host>/<owner>/boundaries-kit@v0.1.0#subdirectory=python"
+uv add --dev "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.0#subdirectory=python"
 uv run boundaries check
 ```
 
 Write `.boundaries/kit.toml` (set `[python] sys_path = ["src"]` for a `src/`
 layout) and one manifest per component, then `uv run boundaries generate`. The
 `init` and `lint-rules` commands come from the Node CLI:
-`npx --yes --package=github:<owner>/boundaries-kit#v0.1.0 boundaries init`.
+`npx --yes --package=github:Lupinixio/agent-terminus#v0.1.0 boundaries init`.
 
 Optional: the pytest fixtures `boundary_project` and `secret_sentinels`, helpers
-in `boundaries_kit.testing`, and an import-linter contract type
-(`boundaries-kit[importlinter]`); see [docs/adapters.md](docs/adapters.md).
+in `agent_terminus.testing`, and an import-linter contract type
+(`agent-terminus[importlinter]`); see [docs/adapters.md](docs/adapters.md).
 
 ### Node / TypeScript
 
 ```sh
-npm i -D github:<owner>/boundaries-kit#v0.1.0 dependency-cruiser
+npm i -D github:Lupinixio/agent-terminus#v0.1.0 dependency-cruiser
 npx boundaries init
 npx boundaries check
 npx boundaries lint-rules
 ```
 
 `dependency-cruiser ^18` is an optional peer, needed when a Node manifest has
-`[imports]`. Helpers for vitest/node:test/jest are in `boundaries-kit/testing`.
+`[imports]`. Helpers for vitest/node:test/jest are in `agent-terminus/testing`.
 
 ### Claude Code
 
@@ -132,7 +138,7 @@ Then follow the GitHub settings in
 - **Cursor, Windsurf, Copilot**: copy `rules/boundaries.md` into the tool's rules
   folder; `lint-rules` scans the usual locations.
 - **Other agent hooks**: import `decide({ toolName, toolInput, cwd })` from
-  `boundaries-kit/hook` and map `{ decision, reason }` to the tool's format.
+  `agent-terminus/hook` and map `{ decision, reason }` to the tool's format.
 - Agent role snippets (planning, implementing, reviewing):
   [rules/agent-snippets.md](rules/agent-snippets.md).
 
@@ -154,12 +160,12 @@ CODEOWNERS block, 70 internal error. Contract: [docs/adapters.md](docs/adapters.
 
 ## Distribution
 
-- **Node**: `npm i -D github:<owner>/boundaries-kit#v0.1.0` (the package is the
-  repository root, so no build step), `npm i -D file:../boundaries-kit`, or an
+- **Node**: `npm i -D github:Lupinixio/agent-terminus#v0.1.0` (the package is the
+  repository root, so no build step), `npm i -D file:../agent-terminus`, or an
   `npm pack` tarball. npm publishing comes later.
-- **Python**: `uv add --dev "boundaries-kit @ git+https://<host>/<owner>/boundaries-kit@v0.1.0#subdirectory=python"`,
-  or `uv add --dev --editable ../boundaries-kit/python`; with pip,
-  `pip install "boundaries-kit @ git+https://<host>/<owner>/boundaries-kit@v0.1.0#subdirectory=python"`.
+- **Python**: `uv add --dev "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.0#subdirectory=python"`,
+  or `uv add --dev --editable ../agent-terminus/python`; with pip,
+  `pip install "agent-terminus @ git+https://github.com/Lupinixio/agent-terminus@v0.1.0#subdirectory=python"`.
 - **Copy only**: `rules/boundaries.md` and `hooks/protect-boundaries.mjs` are
   self-contained single files.
 - Both packages share one version and one tag (`vX.Y.Z`).
@@ -179,5 +185,5 @@ CODEOWNERS block, 70 internal error. Contract: [docs/adapters.md](docs/adapters.
 
 ## Status and licence
 
-v0.1.0. No licence has been chosen yet; until one is added, all rights are
-reserved (see [LICENSE](LICENSE)). Contributions: [CONTRIBUTING.md](CONTRIBUTING.md).
+v0.1.0. Released under the [MIT licence](LICENSE). Contributions:
+[CONTRIBUTING.md](CONTRIBUTING.md).

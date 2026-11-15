@@ -5,9 +5,9 @@ from pathlib import Path
 import pytest
 from conftest import FIXTURES, component, minimal_project, write_files
 
-from boundaries_kit.checks import ConfigError
-from boundaries_kit.checks.imports import check_imports, classify, find_imports, module_name
-from boundaries_kit.manifest import load_project
+from agent_terminus.checks import ConfigError
+from agent_terminus.checks.imports import check_imports, classify, find_imports, module_name
+from agent_terminus.manifest import load_project
 
 IMPORTS = """[imports]
 internal = ["app.clock", { target = "app.core.contract", only_from = ["app.web.handlers"] }]

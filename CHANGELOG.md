@@ -6,6 +6,19 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed the project from `boundaries-kit` to **Agent Terminus**: npm package
+  and PyPI distribution `agent-terminus`, Python import package `agent_terminus`
+  (`python -m agent_terminus`, pytest plugin `agent_terminus`, import-linter
+  contract type `agent_terminus.importlinter_contract.BoundaryContract`), schema
+  `$id`s `urn:agent-terminus:...`, CODEOWNERS markers `# BEGIN agent-terminus` /
+  `# END agent-terminus`, AGENTS.md markers `<!-- agent-terminus:rules:* -->`
+  and the version header in `.boundaries/rules.md`. The `.boundaries/` folder,
+  manifest file names and the `boundaries` command are unchanged
+  (`docs/decisions/0003-rename-to-agent-terminus.md`).
+- Licensed under MIT (previously no licence, all rights reserved).
+
 ## [0.1.0]
 
 ### Added
@@ -21,7 +34,7 @@ All notable changes to this project are documented here. The format follows
 - Node adapter (repository root): dependency-cruiser import check, Babel call
   scan, providers and probes, secret-leak detection, `index.json` and
   `depcruise.cjs` generation, and the shared tooling: `lint-rules`, `diff`,
-  `codeowners`, `init`. Test helpers in `boundaries-kit/testing`.
+  `codeowners`, `init`. Test helpers in `agent-terminus/testing`.
 - Claude Code `PreToolUse` hook (`hooks/protect-boundaries.mjs`), git pre-commit
   template, CODEOWNERS snippet and GitHub workflow template.
 - Rule text (`rules/boundaries.md`) and agent snippets.

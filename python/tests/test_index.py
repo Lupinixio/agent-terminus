@@ -5,10 +5,10 @@ from pathlib import Path
 
 from conftest import FIXTURES, REPO, component, copy_fixture, minimal_project, run_cli, write_files
 
-from boundaries_kit.generate import generate
-from boundaries_kit.index_file import INDEX_PATH, build_index
-from boundaries_kit.manifest import load_project
-from boundaries_kit.support import BUILTIN_PROTECTED
+from agent_terminus.generate import generate
+from agent_terminus.index_file import INDEX_PATH, build_index
+from agent_terminus.manifest import load_project
+from agent_terminus.support import BUILTIN_PROTECTED
 
 
 def test_builtin_protected_matches_the_schema_copy() -> None:

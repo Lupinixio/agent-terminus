@@ -36,13 +36,13 @@ export function runNode(args) {
 }
 
 /**
- * Runs the Python CLI (`python -m boundaries_kit`).
+ * Runs the Python CLI (`python -m agent_terminus`).
  * @param {string[]} args
  * @returns {Run}
  */
 export function runPython(args) {
   requirePython();
-  const r = spawnSync(PYTHON, ['-m', 'boundaries_kit', ...args], { cwd: REPO, encoding: 'utf8' });
+  const r = spawnSync(PYTHON, ['-m', 'agent_terminus', ...args], { cwd: REPO, encoding: 'utf8' });
   return { code: r.status, stdout: r.stdout, stderr: r.stderr };
 }
 

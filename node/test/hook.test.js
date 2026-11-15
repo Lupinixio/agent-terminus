@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 import { decide, isReadOnlySegment } from '../../hooks/protect-boundaries.mjs';
@@ -45,10 +47,11 @@ test('manifest-protected path asks; unrelated file is silent', (t) => {
 });
 
 test('no .boundaries means no output', (t) => {
-  const dir = makeTmp(t, { 'a.txt': '' });
-  // The temp dir lives inside the kit repo, whose own .boundaries/ would be found; use decide() with a root-less path.
-  const outside = path.parse(dir).root;
-  assert.equal(decide({ toolName: 'Edit', toolInput: { file_path: path.join(outside, 'no-such-dir-bk', 'a.txt') }, cwd: outside }), null);
+  // makeTmp() lives inside the kit repo, whose own .boundaries/ would be found; use the OS temp dir instead.
+  const dir = mkdtempSync(path.join(os.tmpdir(), 'agent-terminus-hook-'));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  writeFileSync(path.join(dir, 'a.txt'), '');
+  assert.equal(decide({ toolName: 'Edit', toolInput: { file_path: path.join(dir, 'a.txt') }, cwd: dir }), null);
 });
 
 test('bash write asks, bash read is silent', (t) => {

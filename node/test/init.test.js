@@ -16,8 +16,8 @@ test('init creates the basics, is idempotent, and check passes afterwards', (t) 
   for (const rel of ['.boundaries/kit.toml', '.boundaries/rules.md', '.boundaries/component.toml.example', '.boundaries/generated/index.json']) {
     assert.ok(existsSync(path.join(dir, rel)), rel);
   }
-  assert.match(read(dir, '.boundaries/rules.md'), /^<!-- boundaries-kit \d+\.\d+\.\d+/);
-  assert.match(first.stdout, /# BEGIN boundaries-kit/);
+  assert.match(read(dir, '.boundaries/rules.md'), /^<!-- agent-terminus \d+\.\d+\.\d+/);
+  assert.match(first.stdout, /# BEGIN agent-terminus/);
   assert.match(first.stdout, /boundaries \/ node/);
   const second = runCli(['init', '--root', dir]);
   assert.doesNotMatch(second.stdout, /created|updated/);
@@ -66,7 +66,7 @@ test('--agents-md inlines the rules between markers once', (t) => {
   runCli(['init', '--root', dir, '--agents-md']);
   runCli(['init', '--root', dir, '--agents-md']);
   const text = read(dir, 'AGENTS.md');
-  assert.equal(text.match(/boundaries-kit:rules:start/g)?.length, 1);
+  assert.equal(text.match(/agent-terminus:rules:start/g)?.length, 1);
   assert.match(text, /^# Agents/);
   assert.match(text, /Read a component's manifest/);
 });
@@ -77,8 +77,8 @@ test('--git-hook writes commands for the detected languages and prints git confi
   assert.match(r.stdout, /git config core\.hooksPath \.githooks/);
   const hook = read(dir, '.githooks/pre-commit');
   assert.match(hook, /^uv run boundaries check$/m);
-  assert.match(hook, /^# npx --yes --package=github:<owner>\/boundaries-kit#v/m);
-  assert.match(preCommitFor({ python: true, node: false, uvLock: false }), /^python -m boundaries_kit check$/m);
+  assert.match(hook, /^# npx --yes --package=github:Lupinixio\/agent-terminus#v/m);
+  assert.match(preCommitFor({ python: true, node: false, uvLock: false }), /^python -m agent_terminus check$/m);
   assert.match(preCommitFor({ python: false, node: true, uvLock: false }), /^npx --no-install boundaries lint-rules$/m);
 });
 

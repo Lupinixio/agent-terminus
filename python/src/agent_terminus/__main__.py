@@ -1,4 +1,4 @@
-"""``python -m boundaries_kit``."""
+"""``python -m agent_terminus``."""
 
 import sys
 

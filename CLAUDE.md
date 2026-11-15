@@ -1,4 +1,4 @@
-# boundaries-kit
+# agent-terminus
 
 A toolkit other developers drop into Python and Node/TypeScript repositories:
 hard limits as checked manifests, AI rules as principles only. Everything outside
@@ -26,7 +26,7 @@ The kit's own limits are in `.boundaries/` (decisions in `docs/decisions/`).
   - `templates/`: CODEOWNERS snippet and the GitHub workflow template;
   - `node/`: the Node adapter and shared tooling (`bin/`, `src/`, `test/`); the npm
     package is the repository root;
-  - `python/`: the Python adapter (`src/boundaries_kit`, `tests/`);
+  - `python/`: the Python adapter (`src/agent_terminus`, `tests/`);
   - `fixtures/<language>/{passing,violating}`: end-to-end projects for each adapter;
   - `examples/`: worked examples for users;
   - `tools/cross/`: tests that need both environments;
@@ -42,7 +42,7 @@ The kit's own limits are in `.boundaries/` (decisions in `docs/decisions/`).
 - `index.json` must stay byte-identical from both adapters (cross-tested).
 - Exit codes, the JSON report and the rule text are a public contract.
 - Pre-1.0 semver; one version for both packages (package.json, `version.js`,
-  `boundaries_kit.__version__`, `pyproject.toml`, the hook's `KIT_VERSION`).
+  `agent_terminus.__version__`, `pyproject.toml`, the hook's `KIT_VERSION`).
 - Temp files go under `.scratch/` (git-ignored).
 
 ## Docs that change with code
