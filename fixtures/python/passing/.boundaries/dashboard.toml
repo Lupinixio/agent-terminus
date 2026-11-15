@@ -1,0 +1,39 @@
+schema_version = 1
+
+[component]
+name = "dashboard"
+language = "python"
+root = "src/okapp/dashboard"
+package = "okapp.dashboard"
+principle = "The dashboard shows engine state and forwards operator commands through the contract; it never touches storage, processes or the network."
+decisions = ["docs/decisions/0001-dashboard-boundary.md"]
+
+[imports]
+internal = ["okapp.clock", "okapp.core.contract"]
+external = []
+builtin = ["collections", "json", "logging", { target = "os", only_from = ["okapp.dashboard.settings"] }]
+
+[calls]
+forbidden = [
+  "open",
+  "*.open",
+  "eval",
+  { pattern = "subprocess.*", reason = "no child processes from the dashboard" },
+  { pattern = "sqlite3.*", reason = "storage belongs to the engine" },
+]
+
+[[entrypoints]]
+name = "http"
+provider = "okapp.dashboard.boundary:http_routes"
+exact = ["GET /", "GET /api/status", "POST /api/pause"]
+
+[runtime.bind]
+hosts = ["127.0.0.1"]
+provider = "okapp.dashboard.boundary:bind_hosts"
+
+[runtime.secrets]
+names = ["OKAPP_API_TOKEN"]
+probe = "okapp.dashboard.boundary:secret_probe"
+
+[protected]
+paths = ["src/okapp/dashboard/boundary.py"]

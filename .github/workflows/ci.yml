@@ -1,0 +1,42 @@
+# The kit's own CI: every check from CLAUDE.md on Linux and Windows, both
+# supported Node lines and the lowest and highest tested Python.
+# Pinning actions to a full commit SHA is recommended.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: ${{ matrix.os }} / node ${{ matrix.node }} / python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: ["22.18", "24"]
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - uses: astral-sh/setup-uv@v6
+      - run: npm ci
+      - run: uv sync --project python --locked --python ${{ matrix.python }}
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: uv run --project python ruff check python
+      - run: uv run --project python ruff format --check python
+      - run: uv run --directory python mypy
+      - run: uv run --project python pytest -q python/tests
+      - run: npm run test:cross

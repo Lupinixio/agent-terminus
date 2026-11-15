@@ -1,0 +1,46 @@
+schema_version = 1
+
+[component]
+name = "dashboard"
+language = "python"
+root = "src/orders/dashboard"
+package = "orders.dashboard"
+principle = "The operator dashboard shows order-service state and forwards a few operator commands through the core contract. Admin operations stay CLI-only."
+decisions = ["docs/decisions/0001-dashboard-boundary.md"]
+
+[imports]
+internal = ["orders.clock", "orders.core.contract"]
+external = ["starlette", "jinja2", { target = "uvicorn", only_from = ["orders.dashboard.server"] }]
+builtin = ["dataclasses", "hmac", "json", "logging", "os"]
+
+[calls]
+forbidden = [
+  { pattern = "open", reason = "the dashboard reads no files; state comes through the contract" },
+  { pattern = "*.open", reason = "the dashboard reads no files; state comes through the contract" },
+  { pattern = "sqlite3.*", reason = "storage belongs to the core" },
+  { pattern = "subprocess.*", reason = "no child processes from a web process" },
+  { pattern = "os.system", reason = "no shell from a web process" },
+  { pattern = "importlib.import_module", reason = "dynamic imports would bypass the import limits" },
+]
+
+[[entrypoints]]
+name = "http"
+provider = "orders.dashboard.boundary:http_routes"
+exact = [
+  "GET /",
+  "GET /api/status",
+  "POST /api/pause",
+  "POST /api/resume",
+  "POST /api/orders/{id}/cancel",
+]
+
+[runtime.bind]
+hosts = ["127.0.0.1"]
+provider = "orders.dashboard.boundary:bind_hosts"
+
+[runtime.secrets]
+names = ["ORDERS_API_TOKEN"]
+probe = "orders.dashboard.boundary:secret_probe"
+
+[protected]
+paths = ["src/orders/dashboard/boundary.py"]

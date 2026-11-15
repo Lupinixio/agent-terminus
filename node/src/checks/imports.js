@@ -76,7 +76,14 @@ export async function checkImports(project, manifest) {
   }
   const rules = toDepcruiseRules(manifest);
   /** @type {Record<string, unknown>} */
-  const options = { validate: true, ruleSet: { forbidden: rules }, doNotFollow: { path: 'node_modules' } };
+  const options = {
+    validate: true,
+    ruleSet: { forbidden: rules },
+    doNotFollow: { path: 'node_modules' },
+    // Resolve package `exports` like Node does (dependency-cruiser's recommended
+    // settings); without them ESM-only subpath exports look unresolvable.
+    enhancedResolveOptions: { exportsFields: ['exports'], conditionNames: ['import', 'require', 'node', 'default', 'types'] },
+  };
   /** @type {Record<string, unknown> | undefined} */
   let transpileOptions;
   const tsconfig = project.kit.nodeTsconfig;

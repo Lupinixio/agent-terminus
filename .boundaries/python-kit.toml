@@ -1,0 +1,17 @@
+schema_version = 1
+
+[component]
+name = "python-kit"
+language = "python"
+root = "python/src/boundaries_kit"
+package = "boundaries_kit"
+principle = "The Python adapter has no runtime dependencies; the optional integrations each live in one module."
+decisions = ["docs/decisions/0002-kit-dependency-limits.md"]
+
+[imports]
+internal = []
+external = [
+  { target = "importlinter", only_from = ["boundaries_kit.importlinter_contract"] },
+  { target = "pytest", only_from = ["boundaries_kit.pytest_plugin"] },
+]
+builtin = "any"
